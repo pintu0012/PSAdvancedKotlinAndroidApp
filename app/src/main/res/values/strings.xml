@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">EcommerceApp</string>
+    <string name="productcategory">ProductCategory</string>
+    <string name="productname">ProductName</string>
+    <string name="todo">TODO</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="settings">Settings</string>
+    <string name="details">Details</string>
+    <string name="products">Products</string>
+    <string name="search_title">Search...</string>
+    <string name="search">Search...</string>
+    <string name="price_high_to_low">Price - high to low</string>
+    <string name="price_low_to_high">Price - low to high</string>
+    <string name="reset_filters">Reset Filters</string>
+</resources>
