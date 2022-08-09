@@ -7,6 +7,7 @@ import com.example.ecommerceapp.data.model.ProductListItem
 import com.example.ecommerceapp.data.util.Resource
 import com.example.ecommerceapp.domain.usecase.GetProductDetailsUseCase
 import com.example.ecommerceapp.utils.TestContextProvider
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
@@ -19,6 +20,7 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class ProductDetailsViewModelTest {
 
@@ -46,8 +48,22 @@ class ProductDetailsViewModelTest {
     @Test
     fun `Success State Works`() = dispatcher.test.runBlockingTest {
         val product = ProductListItem("category","description",0,"image",100.00,"title")
-        `when`(getProductDetailsUseCase("1")).thenReturn(flowOf(Resource.Success(product)))
-        viewModel.getProductDetails("1")
+        `when`(getProductDetailsUseCase("0")).thenReturn(flowOf(Resource.Success(product)))
+        viewModel.getProductDetails("0")
         Assert.assertEquals(ProductDetailsViewState.ProductLoaded(product),viewModel.viewState.value)
+    }
+
+    @Test
+    fun `Failure State Works`() = dispatcher.test.runBlockingTest {
+        `when`(getProductDetailsUseCase("0")).thenReturn(flowOf(Resource.Error("An Unexpected Error Has Occurred!")))
+        viewModel.getProductDetails("0")
+        Assert.assertEquals(ProductDetailsViewState.ProductLoadFailure("An Unexpected Error Has Occurred!"),viewModel.viewState.value)
+    }
+
+    @Test
+    fun `Loading State Works`() = dispatcher.test.runBlockingTest {
+        `when`(getProductDetailsUseCase("0")).thenReturn(flowOf(Resource.Loading()))
+        viewModel.getProductDetails("0")
+        Assert.assertEquals(ProductDetailsViewState.Loading,viewModel.viewState.value)
     }
 }
