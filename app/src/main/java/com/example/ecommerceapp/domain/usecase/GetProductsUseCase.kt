@@ -13,7 +13,6 @@ class GetProductsUseCase constructor(
     private val productRepository: ProductRepository
 ) {
     operator fun invoke(): Flow<Resource<List<ProductListItem>>> = flow {
-        println(" GetProductsUseCase EMIT CALLED!...")
 
         try {
             emit(Resource.Loading())

@@ -14,6 +14,7 @@ object Versions {
 
     // Activity KTX for viewModels() dependencies
     const val activityKtxVersion = "1.1.0"
+    const val fragmentKtxVersion = "1.5.1"
 
     // Navigation component dependencies
     const val navFragmentKtxVersion = "2.4.1"
@@ -53,6 +54,9 @@ object Versions {
 
     // Testing
     const val truthVersion = "0.40"
+    const val baristaVersion = "4.2.0"
+    const val fragmentVersion = "1.5.1"
+    const val archVersion = "2.1.0"
     const val junitVersion = "4.13"
     const val androidxArchCoreVersion = "2.1.0"
     const val coroutinesTestVersion = "1.4.3"

@@ -4,9 +4,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ecommerceapp.data.model.ProductListItem
+import com.example.ecommerceapp.data.util.CoroutineContextProvider
 import com.example.ecommerceapp.data.util.Resource
 import com.example.ecommerceapp.domain.usecase.GetProductsUseCase
+import com.example.ecommerceapp.ui.base.BaseViewModel
 import com.example.ecommerceapp.ui.product_list.filter_bottom_sheet.SortBy
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.util.*
@@ -19,16 +22,16 @@ sealed class ViewState() {
     data class ProductsLoadFailure(val errorMessage: String) : ViewState()
 }
 
+@HiltViewModel
 class ProductListViewModel @Inject constructor(
     private val getProductsUseCase: GetProductsUseCase,
-    private val defaultDispatcher: CoroutineDispatcher = Dispatchers.Default
-    ) : ViewModel() {
+    contextProvider: CoroutineContextProvider,
+    ) : BaseViewModel(contextProvider) {
 
-//    val productList: MutableLiveData<List<ProductListItem>> = MutableLiveData()
     val viewState = MutableLiveData<ViewState>()
 
     fun getProducts() {
-        viewModelScope.launch(defaultDispatcher) {
+        viewModelScope.launch(contextProvider.default) {
             getProductsUseCase().collect { result ->
                 when (result) {
                     is Resource.Success -> {
@@ -45,12 +48,11 @@ class ProductListViewModel @Inject constructor(
                     }
                 }
             }
-
         }
     }
 
     fun sortProducts(sortBy: SortBy) {
-        viewModelScope.launch(defaultDispatcher) {
+        viewModelScope.launch(contextProvider.default) {
             getProductsUseCase().collect { result ->
                 when (result) {
                     is Resource.Success -> {
@@ -62,9 +64,6 @@ class ProductListViewModel @Inject constructor(
                                 result.data.sortedBy { product -> product.price }
                             } else {
                                 result.data
-                            }
-                            for (obj in result.data) {
-                                println(obj.price)
                             }
                             viewState.postValue(
                                 ViewState.ProductsLoaded(products = sortedList ?: emptyList())
@@ -88,6 +87,9 @@ class ProductListViewModel @Inject constructor(
 
         }
     }
+
+    override val coroutineExceptionHandler: CoroutineExceptionHandler
+        get() = TODO("Not yet implemented")
 
 //            emit(productList)
 

@@ -131,6 +131,7 @@ plugins {
     id(Config.Plugins.kotlinKapt)
     id(Config.Plugins.dagger)
     id("org.jetbrains.kotlin.android")
+
 }
 
 android {
@@ -150,7 +151,7 @@ android {
         viewBinding = true
     }
 
-    compileSdkVersion(Config.Android.androidCompileSdkVersion)
+    compileSdk = Config.Android.androidCompileSdkVersion
     defaultConfig {
         applicationId = (Environments.Release.appId)
         minSdk = (Config.Android.androidMinSdkVersion)
@@ -181,6 +182,7 @@ android {
 
 }
 
+
 dependencies {
 
     //Modules
@@ -198,6 +200,7 @@ dependencies {
     implementation(UiDep.navigationFragmentKtx)
     implementation(UiDep.navigationUiKtx)
     implementation(UiDep.activityKtx)
+//    implementation(UiDep.fragmentKtx)
     implementation("androidx.appcompat:appcompat:1.4.2")
     implementation("com.google.android.material:material:1.6.1")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -229,6 +232,7 @@ dependencies {
     // Test Dependencies
     testImplementation(UiDep.Test.truth)
     testImplementation(UiDep.Test.junit)
+    testImplementation(UiDep.Test.arch)
     testImplementation(UiDep.Test.assertJ)
     testImplementation(UiDep.Test.mockitoKotlin)
     testImplementation(UiDep.Test.mockitoInline)
@@ -250,6 +254,15 @@ dependencies {
     }
     androidTestImplementation(UiDep.Test.truth)
     androidTestImplementation(UiDep.Test.mockitoAndroid)
+    androidTestImplementation(UiDep.Test.arch)
+    androidTestImplementation(UiDep.Test.testRules)
+    androidTestImplementation(UiDep.Test.espressoCore)
+    androidTestImplementation(UiDep.Test.espressoIntents)
+    androidTestImplementation(UiDep.Test.barista)
+    androidTestImplementation(UiDep.Test.junit)
+    androidTestImplementation(UiDep.Test.testExtJunit)
+    androidTestImplementation(UiDep.Test.fragmentTest)
+    debugImplementation(UiDep.Test.fragmentTest)
     kapt(CacheDep.roomKapt)
 
 }

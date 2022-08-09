@@ -9,6 +9,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -16,12 +17,19 @@ import com.example.ecommerceapp.MainActivity
 import com.example.ecommerceapp.data.model.ProductListItem
 import com.example.ecommerceapp.data.util.Utils.showSnackBar
 import com.example.ecommerceapp.databinding.FragmentProductDetailsBinding
+import com.example.ecommerceapp.ui.base.BaseFragment
+import com.example.ecommerceapp.ui.base.BaseViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
-class ProductDetailsFragment : Fragment() {
+@AndroidEntryPoint
+class ProductDetailsFragment : BaseFragment<FragmentProductDetailsBinding, BaseViewModel>() {
+
+    override val viewModel: ProductDetailsViewModel by viewModels()
+
+    override fun getViewBinding(): FragmentProductDetailsBinding  = FragmentProductDetailsBinding.inflate(layoutInflater)
     // TODO: Rename and change types of parameters
     private var productId: String = ""
-    private lateinit var productDetailsViewModel: ProductDetailsViewModel
-    private lateinit var binding: FragmentProductDetailsBinding
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +42,6 @@ class ProductDetailsFragment : Fragment() {
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
                     // Handle the back button event
-                    println("BACK PRESSED!....")
                     findNavController().navigateUp()
                 }
             }
@@ -57,33 +64,30 @@ class ProductDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViewModel()
+//        initViewModel()
         displayProductDetails()
     }
 
-    private fun initViewModel() {
-        productDetailsViewModel = (activity as MainActivity).productDetailsViewModel
-    }
+//    private fun initViewModel() {
+//        viewModel = (activity as MainActivity).productDetailsViewModel
+//    }
 
     private fun displayProductDetails() {
         if (productId.isNotEmpty()) {
-            productDetailsViewModel.getProductDetails(productId)
+            viewModel.getProductDetails(productId)
         }
 
-        productDetailsViewModel.viewState.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.viewState.observe(viewLifecycleOwner, Observer { state ->
             when (state) {
                 is ProductDetailsViewState.Loading -> {
-                    println("LOADING STATE IS CALLED!")
                     binding.progressBar.visibility = View.VISIBLE
                 }
                 is ProductDetailsViewState.ProductLoaded -> {
-                    println("ProductsLoaded STATE IS CALLED!")
                     binding.progressBar.visibility = View.GONE
                     showProductDetails(state.product)
 
                 }
                 is ProductDetailsViewState.ProductLoadFailure -> {
-                    println("ProductsLoadFailure STATE IS CALLED!")
                     binding.progressBar.visibility = View.GONE
                     handleErrorMessage(state.errorMessage)
                 }
@@ -103,6 +107,7 @@ class ProductDetailsFragment : Fragment() {
     }
 
     private fun handleErrorMessage(errorMessage: String) {
+        Timber.e(errorMessage)
         showSnackBar(binding.root, errorMessage)
     }
 
@@ -114,5 +119,7 @@ class ProductDetailsFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+
 
 }

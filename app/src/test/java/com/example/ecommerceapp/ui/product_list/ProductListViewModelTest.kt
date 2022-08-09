@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer
 import com.example.ecommerceapp.data.util.Resource
 import com.example.ecommerceapp.domain.usecase.GetProductsUseCase
 import com.example.ecommerceapp.ui.product_list.fakes.FakeUiData
+import com.example.ecommerceapp.utils.TestContextProvider
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.whenever
@@ -29,7 +30,7 @@ import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class ProductListViewModelTest{
+class ProductListViewModelTest {
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -40,35 +41,40 @@ class ProductListViewModelTest{
     private lateinit var observer: Observer<ViewState>
 
     @Mock
-    private lateinit var getProductsUseCase:GetProductsUseCase
+    private lateinit var getProductsUseCase: GetProductsUseCase
+
+    private val dispatcher = TestContextProvider()
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        viewModel = ProductListViewModel(getProductsUseCase, TestCoroutineDispatcher())
+        viewModel = ProductListViewModel(getProductsUseCase, dispatcher)
         viewModel.viewState.observeForever(observer)
     }
 
     @Test
-    fun `Success State Works`() = runBlockingTest {
-        val products  = FakeUiData.getProducts(0)
+    fun `Success State Works`() = dispatcher.test.runBlockingTest {
+        val products = FakeUiData.getProducts(0)
         `when`(getProductsUseCase()).thenReturn(flowOf(Resource.Success(products)))
         viewModel.getProducts()
-        Assert.assertEquals(ViewState.ProductsLoaded(products),viewModel.viewState.value)
+        Assert.assertEquals(ViewState.ProductsLoaded(products), viewModel.viewState.value)
     }
 
     @Test
-    fun `Failure State works`() = runBlockingTest {
+    fun `Failure State works`() = dispatcher.test.runBlockingTest {
         `when`(getProductsUseCase()).thenReturn(flowOf(Resource.Error("An Unexpected Error Has Occurred!")))
         viewModel.getProducts()
-        Assert.assertEquals(ViewState.ProductsLoadFailure("An Unexpected Error Has Occurred!"),viewModel.viewState.value)
+        Assert.assertEquals(
+            ViewState.ProductsLoadFailure("An Unexpected Error Has Occurred!"),
+            viewModel.viewState.value
+        )
     }
 
     @Test
-    fun `Loading State Works`() = runBlockingTest {
+    fun `Loading State Works`() = dispatcher.test.runBlockingTest {
         `when`(getProductsUseCase()).thenReturn(flowOf(Resource.Loading()))
         viewModel.getProducts()
-        Assert.assertEquals(ViewState.Loading,viewModel.viewState.value)
+        Assert.assertEquals(ViewState.Loading, viewModel.viewState.value)
     }
 
 

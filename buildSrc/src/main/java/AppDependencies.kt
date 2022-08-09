@@ -18,6 +18,7 @@ object AppDependencies {
         const val navigationUiKtx =
             "androidx.navigation:navigation-ui-ktx:${Versions.navUiKtxVersion}"
         const val activityKtx = "androidx.activity:activity-ktx:${Versions.activityKtxVersion}"
+        const val fragmentKtx = "androidx.activity:fragment-ktx:${Versions.fragmentKtxVersion}"
     }
 
     object LifeCycleDep {
@@ -77,7 +78,10 @@ const val coroutineTest =
     }
 
     object TestDep {
+        const val fragmentTest = "androidx.fragment:fragment-testing:${Versions.fragmentVersion}"
+        const val barista = "com.adevinta.android:barista:${Versions.baristaVersion}"
         const val truth = "com.google.truth:truth:${Versions.truthVersion}"
+        const val arch = "androidx.arch.core:core-testing:${Versions.archVersion}"
         const val coroutinesTest =
             "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.coroutinesTestVersion}"
         const val junit = "junit:junit:${Versions.junitVersion}"

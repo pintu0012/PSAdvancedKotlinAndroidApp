@@ -10,6 +10,7 @@ object UiDep {
     const val navigationFragmentKtx = AppDependencies.CoreDep.navigationFragmentKtx
     const val navigationUiKtx = AppDependencies.CoreDep.navigationUiKtx
     const val activityKtx = AppDependencies.CoreDep.activityKtx
+    const val fragmentKtx = AppDependencies.CoreDep.fragmentKtx
 
     // LifeCycle
     val LifeCycle = listOf(
@@ -42,7 +43,13 @@ object UiDep {
     const val lottie = AppDependencies.LottieDep.lottie
 
     object Test {
+        const val fragmentTest = AppDependencies.TestDep.fragmentTest
         const val truth = AppDependencies.TestDep.truth
+        const val barista = AppDependencies.TestDep.barista
+        const val espressoCore = AppDependencies.TestDep.espressoCore
+        const val espressoIntents = AppDependencies.TestDep.espressoIntents
+        const val arch = AppDependencies.TestDep.arch
+        const val testRules = AppDependencies.TestDep.testRules
         const val mockitoAndroid = AppDependencies.TestDep.mockitoAndroid
         const val junit = AppDependencies.TestDep.junit
         const val coroutines = AppDependencies.TestDep.coroutinesTest

@@ -34,7 +34,6 @@ class ProductRepositoryImpl(
     }
 
     private suspend fun getProductsFromApi(): List<ProductListItem> {
-        println("getProductsFromApi CALLED!...")
 
         var productList: List<ProductListItem> = emptyList()
         try {
@@ -50,7 +49,6 @@ class ProductRepositoryImpl(
     }
 
     private suspend fun getProductsFromDB(): List<ProductListItem> {
-        println("getProductsFromDB CALLED!...")
 
         lateinit var productList: List<ProductListItem>
         try {
@@ -70,7 +68,6 @@ class ProductRepositoryImpl(
     }
 
     private suspend fun getProductsFromCache(): List<ProductListItem> {
-        println("getProductsFromCache CALLED!...")
         lateinit var productList: List<ProductListItem>
         try {
             productList = productCacheDataSource.getProductsFromCache()
@@ -115,7 +112,6 @@ class ProductRepositoryImpl(
 //    }
 
     private suspend fun getProductDetailsFromDB(productId:String): ProductListItem {
-        println("getProductDetailsFromDB CALLED!...")
         lateinit var product: ProductListItem
         try {
             product = productLocalDataSource.getProductDetailsFromDB(productId)
@@ -136,7 +132,6 @@ class ProductRepositoryImpl(
     }
 
     private suspend fun getProductDetailsFromApi(productId:String): ProductListItem {
-        println("getProductDetailsFromApi CALLED!...")
 
         lateinit var product: ProductListItem
         try {

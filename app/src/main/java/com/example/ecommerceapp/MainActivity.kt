@@ -12,9 +12,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.*
 import com.example.ecommerceapp.databinding.ActivityMainBinding
 import com.example.ecommerceapp.ui.product_details.ProductDetailsViewModel
-import com.example.ecommerceapp.ui.product_details.ProductDetailsViewModelFactory
+//import com.example.ecommerceapp.ui.product_details.ProductDetailsViewModelFactory
 import com.example.ecommerceapp.ui.product_list.ProductListViewModel
-import com.example.ecommerceapp.ui.product_list.ProductViewModelFactory
+//import com.example.ecommerceapp.ui.product_list.ProductViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -22,11 +22,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    @Inject
-    lateinit var productViewModelFactory: ProductViewModelFactory
+//    @Inject
+//    lateinit var productViewModelFactory: ProductViewModelFactory
 
-    @Inject
-    lateinit var productDetailsViewModelFactory: ProductDetailsViewModelFactory
+//    @Inject
+//    lateinit var productDetailsViewModelFactory: ProductDetailsViewModelFactory
 
     lateinit var productListViewModel: ProductListViewModel
     lateinit var productDetailsViewModel: ProductDetailsViewModel
@@ -39,12 +39,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
             setupBottomNavigationBar()
-        productListViewModel =
-            ViewModelProvider(this, productViewModelFactory)[ProductListViewModel::class.java]
-        productDetailsViewModel = ViewModelProvider(
-            this,
-            productDetailsViewModelFactory
-        )[ProductDetailsViewModel::class.java]
+//        productListViewModel =
+//            ViewModelProvider(this, productViewModelFactory)[ProductListViewModel::class.java]
+//        productDetailsViewModel = ViewModelProvider(
+//            this,
+//            productDetailsViewModelFactory
+//        )[ProductDetailsViewModel::class.java]
     }
 
     private fun setupBottomNavigationBar() {

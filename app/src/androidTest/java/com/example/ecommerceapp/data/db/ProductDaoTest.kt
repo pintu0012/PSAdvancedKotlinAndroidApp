@@ -5,6 +5,8 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.ecommerceapp.data.model.ProductListItem
+import com.example.ecommerceapp.launchFragmentInHiltContainer
+import com.example.ecommerceapp.ui.product_list.ProductFragment
 import com.google.common.truth.Truth
 import kotlinx.coroutines.runBlocking
 import org.junit.After

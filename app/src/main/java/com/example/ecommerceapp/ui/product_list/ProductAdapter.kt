@@ -24,9 +24,6 @@ class ProductAdapter(var productList:ArrayList<ProductListItem>,val productsRecy
         productList.addAll(newProductList)
         filteredProductList.clear()
         filteredProductList.addAll(newProductList)
-
-        println(filteredProductList)
-        println(productList)
         notifyDataSetChanged()
     }
 
@@ -41,7 +38,6 @@ class ProductAdapter(var productList:ArrayList<ProductListItem>,val productsRecy
                 .into(itemBinding.productImage)
 
             itemBinding.cardView.setOnClickListener {
-                println("ITEM CLICKED!....${product.id}")
                 productsRecyclerViewAction.onClick(product.id.toString() )
             }
         }
@@ -71,7 +67,6 @@ class ProductAdapter(var productList:ArrayList<ProductListItem>,val productsRecy
                     val filteredList = ArrayList<ProductListItem>()
                     productList
                         .filter {
-                            println(constraint)
                             (it.title.lowercase().contains(constraint!!))
 //                            or
 //                                    (it.author.contains(constraint)
